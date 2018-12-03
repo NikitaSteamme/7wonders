@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>7 Wonders</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="css/mattm.css" rel="stylesheet" />
+  </head>
+  <body><!-- NAVIGATION -->
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">7W калькулятор</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li class="active"><a href="#">7 Wonders</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<!-- MAIN CONTAINER -->
+<div class="container theme-showcase">
+<div class="page-header">
+<h1>Результаты</h1>
+</div>
+<div class="row">
+<div class="col-md-9"><hr />
+
+<div class="form-group" id="numberOfPlayersBlock">
+  <label>Количество игроков:</label>
+  <select id="numberOfPlayers" class="form-control">
+    <option value="0"> Выберете количество игроков</option>
+    <option value="3">3 Игрока</option>
+    <option value="4">4 Игрока</option>
+    <option value="5">5 Игрока</option>
+    <option value="6">6 Игрока</option>
+  </select>
+</div>
+
+<div ng-bind-html="h.categoriesName" id="townsOutput"></div>
+
+<table class="table">
+<thead>
+<tr><th>Раздел</th><th>Очки</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Деньги</td>
+<td><input id="txt_money" type="number" value="0" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#E24040">
+<td>Война</td>
+<td><input id="txt_military" type="text" onchange="sumDistricts()" /></td>
+</tr>
+<tr>
+<td>Чудеса</td>
+<td><input id="txt_wonders" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#75A2FF">
+<td><span style="color:white;">Синие</span></td>
+<td><input id="txt_blue" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#FFEF75">
+<td>Желтые</td>
+<td><input id="txt_yellow" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#8942f4">
+<td>Purple</td>
+<td><input id="txt_purple" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#A3DD9D">
+<td>Шестеренки</td>
+<td><input id="txt_green_gear" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#A3DD9D">
+<td>Таблички</td>
+<td><input id="txt_green_table" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#A3DD9D">
+<td>Циркули</td>
+<td><input id="txt_green_compass" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="#000000">
+<td><span style="color: white;">Черные</span></td>
+<td><input id="txt_black" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr>
+<td>Лидеры</td>
+<td><input id="txt_leaders" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr bgcolor="Brown">
+<td><span style="color: white;">Долг</span></td>
+<td><input id="txt_Debt" type="number" onchange="sumDistricts()" /></td>
+</tr>
+<tr>
+<td>Результат</td>
+<td><input id="txt_total" type="number" value="0" disabled="disabled" /></td>
+</tr>
+<td>Сохранить результат</td>
+<td><button id="saveResult" onclick="saveResult()" class="btn btn-primary">Сохранить результат</button></td>
+</tr>
+</tbody>
+</table>
+    <div id="result_output"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">// <![CDATA[
+
+function zeroNull(test) {
+    if (isNaN(test)) {
+        return 0;
+    }
+    return test;
+}
+
+function stack(number) {
+    if (number > 0) return Math.pow(number, 2)
+    else return 0;
+}
+
+function sumDistricts() {
+    var iMoney = zeroNull(parseInt(document.getElementById('txt_money').value));
+    var iMilitary = zeroNull(parseInt(document.getElementById('txt_military').value));
+    var iWonders = zeroNull(parseInt(document.getElementById('txt_wonders').value));
+    var iBlue = zeroNull(parseInt(document.getElementById('txt_blue').value));
+    var iYellow = zeroNull(parseInt(document.getElementById('txt_yellow').value));
+    var iPurple = zeroNull(parseInt(document.getElementById('txt_purple').value));
+    var iGreenGear = zeroNull(parseInt(document.getElementById('txt_green_gear').value));
+    var iGreenTable = zeroNull(parseInt(document.getElementById('txt_green_table').value));
+    var iGreenCompass = zeroNull(parseInt(document.getElementById('txt_green_compass').value));
+    var iBlack = zeroNull(parseInt(document.getElementById('txt_black').value));
+    var iLeaders = zeroNull(parseInt(document.getElementById('txt_leaders').value));
+    var iDebt = zeroNull(parseInt(document.getElementById('txt_Debt').value));
+
+
+    var iGreen = stack(iGreenGear) + stack(iGreenTable) + stack(iGreenCompass);
+
+
+    var i = 0;
+
+
+    for (var j = 0; j < iGreenGear; j++) {
+        if (i < iGreenGear) {
+            if (i < iGreenTable) {
+                if (i < iGreenCompass) {
+                    iGreen = iGreen + 7;
+                    i++;
+                }
+            }
+        }
+    }
+
+    var total = Math.trunc(iMoney / 3) + iMilitary + iWonders + iBlue + iYellow + iPurple + iGreen + iBlack + iLeaders - iDebt;
+    document.getElementById('txt_total').value = total;
+};
+
+var results = [];
+
+function saveResult(){
+    results.push(parseInt(document.getElementById('txt_total').value))
+    $('#result_output').append(document.createTextNode('Игрок '+ results.length + ':   ' + results[results.length - 1]+ '  '));
+};
+
+$("#numberOfPlayers").change(function () {
+    $('#townsOutput').empty();
+    var numberOfPlayers = zeroNull(parseInt(document.getElementById('numberOfPlayers').value));
+    var towns = ["Gizah", "Halikarnassos", "The great wall", "Byzantium", "Abu simbel", "Stonehenge", "Petra", "Roma", "Manneken pis", "Olimpia", "Rhodos", "Ephesos", "Babylon", "Alexandria"];
+    var usedTowns = [];
+
+    for (var i = 0; usedTowns.length < numberOfPlayers; i++) {
+        var rand = Math.floor(Math.random() * towns.length);
+        if (!usedTowns.includes(towns[rand])) {
+            usedTowns.push(towns[rand])
+        }
+    }
+    for (var i = 0; i < usedTowns.length; i++){
+        $('#townsOutput').append(document.createTextNode('Игрок '+ (i+1)+ ':   ' + usedTowns[i] + '   '));
+    }
+
+    $('#numberOfPlayersBlock').hide();
+    usedTowns = [];
+});
+    
+    
+// ]]></script>
+</body>
+</html>
