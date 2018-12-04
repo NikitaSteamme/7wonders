@@ -49,7 +49,7 @@
   </select>
 </div>
 
-<div ng-bind-html="h.categoriesName" id="townsOutput"></div>
+<div id="townsOutput"></div>
 
 <table class="table">
 <thead>
@@ -98,7 +98,7 @@
 </tr>
 <tr>
 <td>Лидеры</td>
-<td><input id="txt_leaders" type="number" onchange="sumDistricts()" /></td>
+<td><input id="txt_leaders" name="alias" type="number" onchange="sumDistricts()" /></td>
 </tr>
 <tr bgcolor="Brown">
 <td><span style="color: white;">Долг</span></td>
@@ -108,6 +108,7 @@
 <td>Результат</td>
 <td><input id="txt_total" type="number" value="0" disabled="disabled" /></td>
 </tr>
+<tr>
 <td>Сохранить результат</td>
 <td><button id="saveResult" onclick="saveResult()" class="btn btn-primary">Сохранить результат</button></td>
 </tr>
@@ -129,7 +130,7 @@ function zeroNull(test) {
 }
 
 function stack(number) {
-    if (number > 0) return Math.pow(number, 2)
+    if (number > 0) return Math.pow(number, 2);
     else return 0;
 }
 
@@ -167,14 +168,33 @@ function sumDistricts() {
 
     var total = Math.trunc(iMoney / 3) + iMilitary + iWonders + iBlue + iYellow + iPurple + iGreen + iBlack + iLeaders - iDebt;
     document.getElementById('txt_total').value = total;
-};
+}
 
 var results = [];
 
 function saveResult(){
-    results.push(parseInt(document.getElementById('txt_total').value))
-    $('#result_output').append(document.createTextNode('Игрок '+ results.length + ':   ' + results[results.length - 1]+ '  '));
-};
+    results.push(zeroNull(parseInt(document.getElementById('txt_total').value)));
+
+    $('#result_output').append('<div>');
+    $('#result_output').children().last().addClass((function() {
+        return "item-" + results.length;
+    }));
+    $('#result_output').children().last().append(document.createTextNode('Игрок '+ results.length + ':   ' + results[results.length - 1]+ '  '));
+
+    $('#txt_money').val("");
+    $('#txt_military').val("");
+    $('#txt_wonders').val("");
+    $('#txt_blue').val("");
+    $('#txt_yellow').val("");
+    $('#txt_purple').val("");
+    $('#txt_green_gear').val("");
+    $('#txt_green_table').val("");
+    $('#txt_green_compass').val("");
+    $('#txt_black').val("");
+    $('#txt_leaders').val("");
+    $('#txt_Debt').val("");
+    $('#txt_total').val("");
+}
 
 $("#numberOfPlayers").change(function () {
     $('#townsOutput').empty();
